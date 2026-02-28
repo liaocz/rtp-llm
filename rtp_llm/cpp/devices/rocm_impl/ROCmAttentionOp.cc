@@ -1239,6 +1239,7 @@ AttentionModuleOutput ROCmDevice::decoderSelfAttention(const AttentionModulePara
             DEBUG_PRINT_PARAMS(params, this, "decode_writeKVCache", q_output);
             if (init_params_.use_asm_pa) {
                 // runAiterAsmPA(params, this, *q_output);
+		hipStreamSynchronize(stream_);
                 aiter_wrapper_->runTritonPA(params, this, *q_output, stream_);
             } else {
                 runAiterPA(params, this, *q_output);
